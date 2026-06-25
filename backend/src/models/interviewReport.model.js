@@ -20,37 +20,92 @@ const technicalQuestionSchema = new mongoose.Schema(
   },
 );
 
-const behavioralQuestionSchema = new mongoose.Schema({
-  question: {
-    type: String,
-    required: [true, "Technical question is required"],
+const behavioralQuestionSchema = new mongoose.Schema(
+  {
+    question: {
+      type: String,
+      required: [true, "Technical question is required"],
+    },
+    intention: {
+      type: String,
+      required: [true, "Intention is required"],
+    },
+    answer: {
+      type: String,
+      required: [true, "Answer is required"],
+    },
   },
-  intention: {
-    type: String,
-    required: [true, "Intention is required"],
+  {
+    _id: false,
   },
-  answer: {
-    type: String,
-    required: [true, "Answer is required"],
-  },
-});
+);
 
-const interviewReportSchema = new mongoose.Schema({
-  jobDescription: {
-    types: String,
-    required: [true, "job description is required"],
-  },
-  resume: {
-    type: String,
-  },
+const skillGapSchema = new mongoose.Schema(
+  {
+    skill: {
+      type: String,
+      required: [true, "Skill is required"],
+    },
 
-  selfDescription: {
-    type: String,
+    severity: {
+      type: String,
+      enum: ["low", "medium", "high"],
+      required: [true, "Severity is required"],
+    },
   },
-  matchScore: {
+  {
+    _id: false,
+  },
+);
+
+const preparationPlanSchema = new mongoose.Schema({
+  day: {
     type: Number,
-    min: 0,
-    max: 100,
+    required: [true, "Day is required"],
   },
-  technicalQuestion: [technicalQuestionSchema],
+  focus: {
+    type: String,
+    required: [true, "Focus is required"],
+  },
+  tasks: [
+    {
+      type: String,
+      required: [true, "Task is required"],
+    },
+  ],
 });
+
+const interviewReportSchema = new mongoose.Schema(
+  {
+    jobDescription: {
+      types: String,
+      required: [true, "job description is required"],
+    },
+    resume: {
+      type: String,
+    },
+
+    selfDescription: {
+      type: String,
+    },
+    matchScore: {
+      type: Number,
+      min: 0,
+      max: 100,
+    },
+    technicalQuestion: [technicalQuestionSchema],
+    behavioralQuestion: [behavioralQuestionSchema],
+    skillGaps: [skillGapSchema],
+    preparationPlan: [preparationPlanSchema],
+  },
+  {
+    timestamps: true,
+  },
+);
+
+const interviewReportModel = mongoose.model(
+  "InterviewReport",
+  interviewReportSchema,
+);
+
+export default interviewReportModel;
