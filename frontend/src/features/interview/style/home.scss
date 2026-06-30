@@ -1,0 +1,339 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #070b14;
+  font-family: "Inter", sans-serif;
+  color: white;
+}
+
+.home {
+  min-height: 100vh;
+  background: radial-gradient(
+    circle at top,
+    #131a2d 0%,
+    #090d16 55%,
+    #05070d 100%
+  );
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1250px;
+}
+
+/* =======================
+        HEADING
+========================== */
+
+.heading {
+  text-align: center;
+  margin-bottom: 35px;
+
+  h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 14px;
+
+    span {
+      color: #ff2d74;
+    }
+  }
+
+  p {
+    color: #9ca3af;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+}
+
+/* =======================
+        MAIN CARD
+========================== */
+
+.planner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #10151f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__left,
+  &__right {
+    padding: 28px;
+  }
+
+  &__left {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+
+    @media (max-width: 900px) {
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  }
+}
+
+/* =======================
+        TITLES
+========================== */
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    h3 {
+      font-size: 21px;
+      font-weight: 700;
+    }
+  }
+
+  .icon {
+    font-size: 20px;
+  }
+}
+
+.badge {
+  background: rgba(255, 45, 116, 0.18);
+  color: #ff4d8a;
+  font-size: 11px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* =======================
+        TEXTAREA
+========================== */
+
+textarea {
+  width: 100%;
+  background: #1b2130;
+  color: white;
+  border: 1px solid #2f3647;
+  border-radius: 14px;
+  resize: none;
+  outline: none;
+  padding: 18px;
+  font-size: 15px;
+  line-height: 1.7;
+  transition: 0.25s;
+}
+
+textarea:focus {
+  border-color: #ff2d74;
+  box-shadow: 0 0 0 3px rgba(255, 45, 116, 0.15);
+}
+
+.planner__left textarea {
+  height: 470px;
+}
+
+.planner__right textarea {
+  height: 150px;
+}
+
+textarea::placeholder {
+  color: #79839b;
+}
+
+/* =======================
+        COUNTER
+========================== */
+
+.counter {
+  text-align: right;
+  margin-top: 10px;
+  color: #7b8495;
+  font-size: 13px;
+}
+
+/* =======================
+        UPLOAD BOX
+========================== */
+
+.upload {
+  display: block;
+  cursor: pointer;
+  margin-top: 15px;
+
+  .upload-content {
+    background: #1b2130;
+    border: 2px dashed #364056;
+    border-radius: 16px;
+    padding: 45px 20px;
+    text-align: center;
+    transition: 0.3s;
+
+    &:hover {
+      border-color: #ff2d74;
+      background: #202739;
+    }
+
+    h4 {
+      margin-top: 18px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    p {
+      margin-top: 10px;
+      color: #8c95a8;
+      font-size: 14px;
+    }
+  }
+}
+
+.upload-icon {
+  width: 70px;
+  height: 70px;
+  margin: auto;
+  border-radius: 50%;
+  background: rgba(255, 45, 116, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff2d74;
+  font-size: 30px;
+}
+
+/* =======================
+            OR
+========================== */
+
+.or {
+  display: flex;
+  align-items: center;
+  margin: 22px 0;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #30384a;
+  }
+
+  span {
+    margin: 0 18px;
+    color: #8c95a8;
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+/* =======================
+        INFO BOX
+========================== */
+
+.info {
+  margin-top: 20px;
+  background: rgba(52, 120, 255, 0.12);
+  border: 1px solid rgba(52, 120, 255, 0.25);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  gap: 14px;
+
+  span {
+    font-size: 22px;
+  }
+
+  p {
+    color: #b6c5ff;
+    line-height: 1.6;
+    font-size: 14px;
+
+    strong {
+      color: white;
+    }
+  }
+}
+
+/* =======================
+        BOTTOM
+========================== */
+
+.bottom {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.bottom-text {
+  color: #8c95a8;
+  font-size: 15px;
+}
+
+/* =======================
+        BUTTON
+========================== */
+
+.generate-btn {
+  background: linear-gradient(90deg, #ff2d74, #ff0062);
+  border: none;
+  color: white;
+  padding: 18px 42px;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 10px 30px rgba(255, 45, 116, 0.35);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(255, 45, 116, 0.45);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* =======================
+        FOOTER
+========================== */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 45px;
+
+  a {
+    color: #8c95a8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
