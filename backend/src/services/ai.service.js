@@ -88,6 +88,7 @@ export const interviewReportSchema = z.object({
       }),
     )
     .describe("A day-wise preparation plan for the candidate to follow"),
+  title: z.string().describe("The title of the interview report"),
 });
 
 async function generateInterviewReport({
