@@ -50,40 +50,85 @@ async function registerUserController(req, res) {
 }
 
 // Login controller
+// async function logininUserController(req, res) {
+//   const { email, password } = req.body;
+
+//   const user = await userModel.findOne({ email });
+
+//   if (!user) {
+//     return res.status(400).json({
+//       message: "Invalid email or password",
+//     });
+//   }
+
+//   const isPasswordValid = await bcrypt.compare(password, user.password);
+
+//   if (!isPasswordValid) {
+//     return res.status(400).json({
+//       message: "Invalid email or password",
+//     });
+//   }
+
+//   const token = jwt.sign(
+//     { id: user._id, username: user.username },
+//     process.env.JWT_SECRET,
+//     { expiresIn: "1d" },
+//   );
+
+//   res.cookie("token", token);
+//   res.status(200).json({
+//     message: "User login Successfully",
+//     user: {
+//       id: user._id,
+//       username: user.username,
+//       email: user.email,
+//     },
+//   });
+// }
+
 async function logininUserController(req, res) {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await userModel.findOne({ email });
+    const user = await userModel.findOne({ email });
 
-  if (!user) {
-    return res.status(400).json({
-      message: "Invalid email or password",
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(400).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" },
+    );
+
+    res.cookie("token", token);
+
+    return res.status(200).json({
+      message: "Login successful",
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+
+    return res.status(500).json({
+      message: "Our server is currently unavailable. Please try again later.",
     });
   }
-
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-
-  if (!isPasswordValid) {
-    return res.status(400).json({
-      message: "Invalid email or password",
-    });
-  }
-
-  const token = jwt.sign(
-    { id: user._id, username: user.username },
-    process.env.JWT_SECRET,
-    { expiresIn: "1d" },
-  );
-
-  res.cookie("token", token);
-  res.status(200).json({
-    message: "User login Successfully",
-    user: {
-      id: user._id,
-      username: user.username,
-      email: user.email,
-    },
-  });
 }
 
 // logout controller

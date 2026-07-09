@@ -1,10 +1,29 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../style/home.scss";
+import { useInterview } from "../hooks/useinterview";
+import { useNavigate } from "react-router-dom";
+import LoadingScreen from "./LoadingScreen";
 
 export default function Home() {
+  const { loading, generateReport, reports, getReports } = useInterview();
+
   const [jobDescription, setJobDescription] = useState("");
   const [selfDescription, setSelfDescription] = useState("");
   const [resume, setResume] = useState(null);
+
+  const [offsetY, setOffsetY] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log(window.scrollY);
+      setOffsetY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const resumeInputRef = useRef();
 
   const handleResume = (e) => {
     const file = e.target.files[0];
@@ -14,22 +33,70 @@ export default function Home() {
     setResume(file);
   };
 
-  const handleGenerate = () => {
-    if (!jobDescription.trim()) {
-      alert("Please enter a Job Description.");
-      return;
-    }
+  useEffect(() => {
+    getReports();
+  }, []);
 
-    if (!resume && !selfDescription.trim()) {
-      alert("Upload a resume or enter a self description.");
-      return;
-    }
+  const navigate = useNavigate();
 
-    alert("Frontend Demo: Strategy Generated Successfully!");
+  const handleGenerateReport = async () => {
+    const resumeFile = resumeInputRef.current.files[0];
+    const data = await generateReport({
+      jobDescription,
+      selfDescription,
+      resumeFile,
+    });
+
+    navigate(`/interview/report/${data._id}`);
   };
+
+  if (loading) {
+    return (
+      <main className="loading-screen">
+        <LoadingScreen />
+      </main>
+    );
+  }
 
   return (
     <div className="home">
+      {/* ===== Floating Parallax Objects ===== */}
+
+      <div
+        className="floating floating-1"
+        style={{
+          transform: `translateY(${offsetY * 0.2}px)`,
+        }}
+      />
+
+      <div
+        className="floating floating-2"
+        style={{
+          transform: `translateY(${offsetY * 0.4}px)`,
+        }}
+      />
+
+      <div
+        className="floating floating-3"
+        style={{
+          transform: `translateY(${offsetY * 0.6}px)`,
+        }}
+      />
+
+      <div
+        className="floating floating-4"
+        style={{
+          transform: `translateY(${offsetY * 0.8}px)`,
+        }}
+      />
+
+      <div
+        className="floating floating-5"
+        style={{
+          transform: `translateY(${offsetY * 1}px)`,
+        }}
+      />
+
       <div className="container">
         {/* Heading */}
 
@@ -87,6 +154,7 @@ Senior Frontend Engineer at Google requires proficiency in React, TypeScript, Sy
 
             <label className="upload">
               <input
+                ref={resumeInputRef}
                 type="file"
                 hidden
                 accept=".pdf,.doc,.docx"
@@ -135,10 +203,39 @@ Senior Frontend Engineer at Google requires proficiency in React, TypeScript, Sy
             AI-Powered Strategy Generation • Approx 30s
           </div>
 
-          <button className="generate-btn" onClick={handleGenerate}>
+          <button
+            className="generate-btn"
+            onClick={handleGenerateReport}
+            disabled={loading}
+          >
             ★ Generate My Interview Strategy
           </button>
         </div>
+
+        {/* Recent report list */}
+
+        {reports.length > 0 && (
+          <div className="recent-reports">
+            <h2>Recent Reports</h2>
+
+            <ul className="report-list">
+              {reports.map((report) => (
+                <li
+                  key={report._id}
+                  className="report-item"
+                  onClick={() => navigate(`/interview/report/${report._id}`)}
+                >
+                  <h3>{report.title || "Untitled Position"}</h3>
+
+                  <p className="report-meta">
+                    Generated on{" "}
+                    {new Date(report.createdAt).toLocaleDateString()}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* Footer */}
 

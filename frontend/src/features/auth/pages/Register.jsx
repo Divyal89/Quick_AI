@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import LoadingScreen from "../../interview/pages/LoadingScreen";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Register = () => {
   if (loading) {
     return (
       <main>
-        <h1>Loading......</h1>
+        <LoadingScreen />
       </main>
     );
   }
@@ -81,7 +82,16 @@ const Register = () => {
             />
           </div>
 
-          <button className="button primary-button">Register</button>
+          <button className="button primary-button" disabled={loading}>
+            {loading ? (
+              <>
+                <span className="loader"></span>
+                Creating Account...
+              </>
+            ) : (
+              "Register"
+            )}
+          </button>
         </form>
 
         <p>

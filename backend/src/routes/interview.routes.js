@@ -5,6 +5,7 @@ import {
   generateInterviewReportController,
   getInterviewReportByIdController,
   getAllInterviewReportsController,
+  generateResumePdfController,
 } from "../controllers/interview.controller.js";
 
 import upload from "../middlewares/file.middleware.js";
@@ -35,6 +36,12 @@ interviewRouter.get(
   "/",
   authMiddleware.authUser,
   getAllInterviewReportsController,
+);
+
+interviewRouter.post(
+  "/resume/pdf/:interviewId",
+  authMiddleware.authUser,
+  generateResumePdfController,
 );
 
 export default interviewRouter;

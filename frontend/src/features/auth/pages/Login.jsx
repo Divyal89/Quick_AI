@@ -2,6 +2,7 @@ import React, { use, useState } from "react";
 import "../auth.form.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import LoadingScreen from "../../interview/pages/LoadingScreen";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,14 +13,21 @@ const Login = () => {
   // Control not to refresh the page again and again on clicking a button
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleLogin({ email, password });
-    navigate("/");
+
+    const success = await handleLogin({
+      email,
+      password,
+    });
+
+    if (success) {
+      navigate("/");
+    }
   };
 
   if (loading) {
     return (
       <main>
-        <h1>Loading......</h1>
+        <LoadingScreen />
       </main>
     );
   }
@@ -58,7 +66,16 @@ const Login = () => {
             />
           </div>
 
-          <button className="button primary-button">Login</button>
+          <button className="button primary-button" disabled={loading}>
+            {loading ? (
+              <>
+                <span className="loader"></span>
+                Signing In...
+              </>
+            ) : (
+              "Login"
+            )}
+          </button>
         </form>
 
         <p>

@@ -337,3 +337,67 @@ textarea::placeholder {
     }
   }
 }
+
+.recent-reports {
+  margin-top: 3rem;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.report-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.report-item {
+  background: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: #ec4899;
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.25);
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .report-meta {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  .report-score {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+}
