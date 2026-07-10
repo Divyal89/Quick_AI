@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../style/interview.scss";
-import { useInterview } from "../hooks/useInterview";
+import { useInterview } from "../hooks/useinterview";
 import LoadingScreen from "./LoadingScreen";
 
 const CircleScore = ({ score }) => {
