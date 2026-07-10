@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
-  withCredentials: true,
+  baseURL: import.meta.env.VITE_BASE_URL,
 });
 
 export async function register({ username, email, password }) {
@@ -26,6 +25,7 @@ export async function login({ email, password }) {
       email,
       password,
     });
+
     return response.data;
   } catch (err) {
     console.log(err);
@@ -35,7 +35,12 @@ export async function login({ email, password }) {
 
 export async function getMe() {
   try {
-    const response = await api.get("api/auth/get-me");
+    const response = await api.get("/api/auth/get-me", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
     return response.data;
   } catch (err) {
     console.log(err);
@@ -45,7 +50,12 @@ export async function getMe() {
 
 export async function logout() {
   try {
-    const response = await api.get("api/auth/logout");
+    const response = await api.get("/api/auth/logout", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
     return response.data;
   } catch (err) {
     console.log(err);

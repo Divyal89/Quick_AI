@@ -16,6 +16,8 @@ export const useAuth = () => {
 
     try {
       const data = await login({ email, password });
+      console.log("LOGIN RESPONSE:", data);
+      localStorage.setItem("token", data.token);
 
       setUser(data.user);
 
@@ -34,6 +36,7 @@ export const useAuth = () => {
 
     try {
       const data = await register({ username, email, password });
+      localStorage.setItem("token", data.token);
 
       setUser(data.user);
 
@@ -49,8 +52,11 @@ export const useAuth = () => {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const data = await logout();
-      setUser(data.user);
+      await logout();
+
+      localStorage.removeItem("token");
+
+      setUser(null);
     } catch (error) {
     } finally {
       setLoading(false);
